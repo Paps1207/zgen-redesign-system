@@ -1,0 +1,348 @@
+/* =============================================================
+   scr-01.css — Screen-specific styles for SCR-01: Landing / Registration
+   Imports tokens.css and components.css.
+   Only layout, hero, form panel, and responsive rules live here.
+   ============================================================= */
+
+
+/* ─── PAGE LAYOUT: TWO-COLUMN SPLIT ────────────────────────── */
+
+.page-registration {
+  display: grid;
+  grid-template-columns: 55fr 45fr;
+  min-height: calc(100vh - var(--navbar-height) - 64px); /* 64px = trust bar */
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+
+/* ─── SECTION B: HERO PANEL ─────────────────────────────────── */
+
+.hero-panel {
+  background: var(--color-soft-stone);
+  padding: var(--space-80) var(--margin-desktop) var(--space-80) var(--margin-desktop);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-32);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-panel__eyebrow {
+  /* C-01 TypeLabel — coral variant, handled via type-label classes */
+}
+
+.hero-panel__headline {
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  line-height: var(--leading-hero);
+  letter-spacing: var(--tracking-hero);
+  font-weight: 400;      /* ZGen: no bold — size carries authority */
+  color: var(--color-near-black);
+  max-width: 14ch;       /* tight wrap for editorial feel */
+}
+
+.hero-panel__body {
+  font-family: var(--font-ui);
+  font-size: var(--text-body-lg);
+  line-height: var(--leading-body-lg);
+  color: var(--color-muted-slate);
+  max-width: 42ch;
+}
+
+/* B4: Inline trust signals */
+.trust-signals {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+}
+
+.trust-signals--inline {
+  flex-direction: row;
+}
+
+.trust-signals__item {
+  display: inline-flex;
+  align-items: center;
+}
+
+.trust-signals__divider {
+  display: inline-block;
+  width: 1px;
+  height: 16px;
+  background: var(--color-hairline);
+  margin: 0 var(--space-16);
+  flex-shrink: 0;
+}
+
+/* B5: Media card */
+.hero-panel__media {
+  margin: 0;
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  min-height: 240px;
+}
+
+.hero-panel__media-card {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-deep-green);
+  aspect-ratio: 16 / 9;
+  max-height: 320px;
+}
+
+.hero-panel__media-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-deep-green);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Abstract animated pattern — "emotion via media" per design system */
+.hero-panel__media-abstract {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 30% 60%, rgba(0,100,80,0.8) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 75% 35%, rgba(255,119,89,0.15) 0%, transparent 55%),
+    var(--color-deep-green);
+  animation: abstract-shift 8s ease-in-out infinite alternate;
+}
+
+@keyframes abstract-shift {
+  from { opacity: 0.9; transform: scale(1.0); }
+  to   { opacity: 1.0; transform: scale(1.04); }
+}
+
+
+/* ─── SECTION C: FORM PANEL ─────────────────────────────────── */
+
+.form-panel {
+  background: var(--color-canvas);
+  border-left: 1px solid var(--color-hairline);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--space-80) var(--margin-desktop) var(--space-80) var(--space-64);
+  overflow-y: auto;
+}
+
+.form-panel__inner {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-32);
+}
+
+/* C1: Panel header */
+.form-panel__header {
+  /* no extra margin — gap on parent handles spacing */
+}
+
+.form-panel__title {
+  font-family: var(--font-ui);
+  font-size: var(--text-section);
+  line-height: var(--leading-section);
+  letter-spacing: var(--tracking-section);
+  font-weight: 400;
+  color: var(--color-near-black);
+}
+
+/* C4/C5/C6: Registration form internal spacing */
+.reg-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+}
+
+/* C7: Footer redirect line */
+.form-footer__redirect {
+  font-size: var(--text-body);
+  color: var(--color-muted-slate);
+  text-align: center;
+}
+
+
+/* ─── SECTION D: TRUST BAR ─────────────────────────────────── */
+/* (Structural styles in components.css; positional here) */
+
+.trust-bar__inner {
+  padding: 20px var(--margin-desktop);
+}
+
+
+/* ─── VALIDATION STATES (screen-specific visual coordination) ── */
+
+/*
+   When a field transitions to error state, the helper text
+   is hidden and the error message is shown. JS adds
+   .form-field--error to the .form-field wrapper.
+*/
+
+.form-field--error .form-field__helper {
+  display: none;
+}
+
+.form-field--error .form-field__error {
+  display: block;
+}
+
+.form-field--error .form-field__input {
+  border-color: var(--color-error);
+}
+
+/* Success state: field valid after prior error */
+.form-field--success .form-field__input {
+  border-color: var(--color-success);
+}
+
+
+/* ─── RESPONSIVE: TABLET (768px – 1024px) ───────────────────── */
+/*
+   "Information Density" mode.
+   Typography scales down 15-20%. Margins tighten to 40px.
+*/
+
+@media (max-width: 1024px) {
+
+  .page-registration {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hero-panel {
+    padding: var(--space-64) var(--margin-tablet);
+    gap: var(--space-24);
+  }
+
+  .hero-panel__headline {
+    font-size: clamp(48px, 5vw, 72px);  /* scales down ~15-20% */
+  }
+
+  .hero-panel__body {
+    font-size: var(--text-body);
+  }
+
+  .form-panel {
+    padding: var(--space-64) var(--margin-tablet);
+  }
+
+  .form-panel__title {
+    font-size: clamp(28px, 3.5vw, 40px);
+  }
+
+  .navbar__inner {
+    padding: 0 var(--margin-tablet);
+  }
+
+  .trust-bar__inner {
+    padding: 20px var(--margin-tablet);
+  }
+}
+
+
+/* ─── RESPONSIVE: MOBILE (<768px) ──────────────────────────── */
+/*
+   "Utility & Flow" mode.
+   Stack vertically. Form rises above hero. Strip decorative elements.
+*/
+
+@media (max-width: 767px) {
+
+  /* Grid collapses to single column, form first */
+  .page-registration {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  /* Form panel moves to top on mobile */
+  .form-panel {
+    order: -1;
+    border-left: none;
+    border-bottom: 1px solid var(--color-hairline);
+    padding: var(--space-48) var(--margin-mobile);
+    align-items: stretch;
+  }
+
+  .form-panel__inner {
+    max-width: 100%;
+    gap: var(--space-24);
+  }
+
+  .form-panel__title {
+    font-size: 32px;
+    line-height: 1.1;
+  }
+
+  /* Hero compresses below form */
+  .hero-panel {
+    order: 0;
+    padding: var(--space-48) var(--margin-mobile);
+    gap: var(--space-24);
+  }
+
+  .hero-panel__headline {
+    font-size: 48px;     /* ZGen: 96px → 48-56px on mobile */
+    line-height: 1.1;    /* ZGen: leading increases slightly */
+    max-width: 100%;
+  }
+
+  /* B5: Media asset hidden on mobile — ZGen Responsive Rule 5 */
+  .hero-panel__media {
+    display: none;
+  }
+
+  /* Primary button becomes full width — ZGen Responsive Rule 3 */
+  .pill-btn--full {
+    padding: var(--btn-padding-lg);  /* 16px 32px for touch target */
+    width: 100%;
+  }
+
+  /* Mobile-specific button touch target enforcement */
+  .pill-btn {
+    min-height: var(--btn-min-height);
+  }
+
+  /* OAuth buttons — already full width, increase padding */
+  .oauth-btn {
+    padding: var(--btn-padding-lg);
+  }
+
+  /* Trust bar items scroll horizontally */
+  .trust-bar__inner {
+    padding: 20px var(--margin-mobile);
+    justify-content: flex-start;
+  }
+
+  .trust-bar__track {
+    justify-content: flex-start;
+  }
+
+  /* Navbar collapses */
+  .navbar__inner {
+    padding: 0 var(--margin-mobile);
+  }
+
+  .navbar__prompt {
+    display: none;   /* "Already have an account?" text hidden; link remains */
+  }
+
+  /* Inline trust signals stack slightly */
+  .trust-signals {
+    gap: var(--space-8);
+    flex-wrap: wrap;
+  }
+
+  .trust-signals__divider {
+    display: none;  /* Remove vertical dividers when wrapping */
+  }
+}
