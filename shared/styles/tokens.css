@@ -1,0 +1,92 @@
+/* =============================================================
+   tokens.css — ZGen Design System Tokens
+   Source of truth for all colors, typography, spacing, radius.
+   Import this before any component or screen stylesheet.
+   ============================================================= */
+
+:root {
+
+  /* ─── COLOR TOKENS ──────────────────────────────────────── */
+
+  /* Surfaces */
+  --color-canvas:       #ffffff;
+  --color-soft-stone:   #eeece7;
+  --color-deep-green:   #003c33;
+  --color-dark-navy:    #071829;
+
+  /* Type */
+  --color-near-black:   #17171c;
+  --color-muted-slate:  #6b6b78;   /* approximated; adjust to licensed spec */
+
+  /* Actions & Semantic */
+  --color-action-blue:  #1863dc;
+  --color-coral:        #ff7759;
+  --color-hairline:     #d9d9dd;
+  --color-error:        #b30000;
+  --color-success:      #1a7a4a;
+
+  /* ─── TYPOGRAPHY TOKENS ─────────────────────────────────── */
+
+  /* Families — swap to licensed Unica77 / CohereText in production */
+  --font-display:   'Space Grotesk', sans-serif;   /* → CohereText */
+  --font-ui:        'Space Grotesk', sans-serif;   /* → Unica77 */
+  --font-mono:      'Space Mono', monospace;       /* → CohereMono */
+
+  /* Scale */
+  --text-hero:      96px;
+  --text-section:   48px;
+  --text-body-lg:   18px;
+  --text-body:      16px;
+  --text-mono:      14px;
+
+  /* Leading */
+  --leading-hero:    1.0;
+  --leading-section: 1.2;
+  --leading-body-lg: 1.4;
+  --leading-body:    1.5;
+  --leading-mono:    1.4;
+
+  /* Tracking */
+  --tracking-hero:    -1.92px;
+  --tracking-section: -0.48px;
+  --tracking-mono:     0.28px;
+
+  /* ─── SPACING TOKENS ────────────────────────────────────── */
+
+  --space-2:    2px;
+  --space-6:    6px;
+  --space-8:    8px;
+  --space-12:   12px;
+  --space-16:   16px;
+  --space-24:   24px;
+  --space-32:   32px;
+  --space-40:   40px;
+  --space-48:   48px;
+  --space-64:   64px;
+  --space-80:   80px;
+
+  /* Page margins */
+  --margin-desktop: 80px;
+  --margin-tablet:  40px;
+  --margin-mobile:  24px;
+
+  /* ─── RADIUS TOKENS ─────────────────────────────────────── */
+
+  --radius-sm:      8px;    /* inputs, product cards */
+  --radius-lg:      22px;   /* media cards */
+  --radius-pill:    32px;   /* buttons, chips */
+
+  /* ─── MOTION TOKENS ─────────────────────────────────────── */
+
+  --transition-fast:   200ms ease-out;
+  --transition-linear: 200ms linear;
+  --transition-medium: 300ms ease-out;
+
+  /* ─── COMPONENT TOKENS ──────────────────────────────────── */
+
+  --navbar-height:    64px;
+  --input-padding:    12px 16px;
+  --btn-padding-sm:   12px 24px;
+  --btn-padding-lg:   16px 32px;
+  --btn-min-height:   44px;   /* touch target floor — ZGen Accessibility */
+}
