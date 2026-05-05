@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZGen Study — Verify Your Account</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet" />
+
+  <!-- Shared: design tokens and component library -->
+  <link rel="stylesheet" href="/shared/styles/tokens.css" />
+  <link rel="stylesheet" href="/shared/styles/components.css" />
+  <link rel="stylesheet" href="/archetypes/student-unpaid/ui/styles/scr-02.css" />  
+</head>
+<body>
+
+  <!-- ============================================================
+       C-08: NAVBAR — pre-auth variant (identical to SCR-01)
+       Reuses .navbar, .navbar__inner, .navbar__logo, .navbar__actions
+  ============================================================ -->
+  <header class="navbar navbar--light navbar--sticky" role="banner">
+    <div class="navbar__inner">
+      <a href="/" class="navbar__logo" aria-label="ZGen Study — Home">
+        <svg class="navbar__logo-svg" viewBox="0 0 96 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <text x="0" y="20" font-family="Space Grotesk, sans-serif" font-size="20" font-weight="500" fill="#17171c" letter-spacing="-0.5">ZGEN</text>
+        </svg>
+      </a>
+      <nav class="navbar__actions" aria-label="Account navigation">
+        <span class="navbar__prompt">Already have an account?</span>
+        <a href="/login" class="link-btn link-btn--action-blue link-btn--md" aria-label="Log in to your existing account">Log in</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       MAIN CONTENT — Single-column centred layout
+       No hero panel on this screen. Focused utility surface.
+  ============================================================ -->
+  <main class="page-verification" id="main-content">
+
+    <div class="verification-shell">
+
+      <!-- ============================================================
+           VERIFICATION PANEL — the single focal container
+      ============================================================ -->
+      <section class="verification-panel" aria-label="Account verification">
+
+        <!-- ── PANEL HEADER ────────────────────────────────────── -->
+        <header class="verification-panel__header">
+
+          <!-- Eyebrow: C-01 TypeLabel, coral variant -->
+          <p class="type-label type-label--coral type-label--sm" aria-hidden="true">
+            Account Verification
+          </p>
+
+          <!-- Step indicator: positional context for multi-step flow -->
+          <div class="step-indicator" aria-label="Step 2 of 4: Verification">
+            <div class="step-indicator__track" aria-hidden="true">
+              <span class="step-indicator__step step-indicator__step--done"></span>
+              <span class="step-indicator__step step-indicator__step--active"></span>
+              <span class="step-indicator__step"></span>
+              <span class="step-indicator__step"></span>
+            </div>
+            <p class="type-label type-label--muted type-label--sm step-indicator__label">
+              Step 2 of 4
+            </p>
+          </div>
+
+        </header>
+
+        <!-- C-05: Section Divider (rule-only) -->
+        <div class="section-divider section-divider--rule-only" role="separator" aria-hidden="true"></div>
+
+        <!-- ── PANEL BODY ───────────────────────────────────────── -->
+        <div class="verification-panel__body">
+
+          <!-- Heading -->
+          <h1 class="verification-panel__title">
+            Check your inbox
+          </h1>
+
+          <!-- Descriptor — destination address injected by JS from session -->
+          <p class="verification-panel__descriptor">
+            We sent a 6-digit code to
+            <strong class="verification-panel__destination" id="verification-destination" aria-live="polite">
+              <!-- Populated by JS: e.g. j••••e@gmail.com -->
+            </strong>
+          </p>
+
+          <!-- ── OTP INPUT GROUP ─────────────────────────────── -->
+          <!--
+            6 individual single-character inputs.
+            Grouped with role="group" for screen reader context.
+            JS handles: auto-advance, backspace-back, paste, submission.
+          -->
+          <div
+            class="otp-group"
+            role="group"
+            aria-label="Enter your 6-digit verification code"
+            id="otp-group">
+
+            <div class="otp-group__inputs" id="otp-inputs">
+              <input
+                class="otp-cell"
+                type="text"
+                inputmode="numeric"
+                pattern="[0-9]"
+                maxlength="1"
+                autocomplete="one-time-code"
+                aria-label="Digit 1 of 6"
+                data-index="0"
+                id="otp-0" />
+              <input
+                class="otp-cell"
+                type="text"
+                inputmode="numeric"
+                pattern="[0-9]"
+                maxlength="1"
+                aria-label="Digit 2 of 6"
+                data-index="1"
+                id="otp-1" />
+              <input
+                class="otp-cell"
+                type="text"
+                inputmode="numeric"
+                pattern="[0-9]"
+                maxlength="1"
+                aria-label="Digit 3 of 6"
+                data-index="2"
+                id="otp-2" />
+
+              <!-- Visual separator between digit groups (decorative) -->
+              <span class="otp-group__sep" aria-hidden="true">—</span>
+
+              <input
+                class="otp-cell"
+                type="text"
+                inputmode="numeric"
+                pattern="[0-9]"
+                maxlength="1"
+                aria-label="Digit 4 of 6"
+                data-index="3"
+                id="otp-3" />
+              <input
+                class="otp-cell"
+                type="text"
+                inputmode="numeric"
+                pattern="[0-9]"
+                maxlength="1"
+                aria-label="Digit 5 of 6"
+                data-index="4"
+                id="otp-4" />
+              <input
+                class="otp-cell"
+                type="text"
+                inputmode="numeric"
+                pattern="[0-9]"
+                maxlength="1"
+                aria-label="Digit 6 of 6"
+                data-index="5"
+                id="otp-5" />
+            </div>
+
+            <!-- OTP state message: lives below the inputs -->
+            <!-- States: waiting (empty) | invalid | expired -->
+            <p
+              class="otp-group__status"
+              id="otp-status"
+              role="alert"
+              aria-live="assertive"
+              aria-atomic="true">
+              <!-- Populated by JS per state -->
+            </p>
+
+          </div>
+          <!-- /otp-group -->
+
+          <!-- ── VERIFY BUTTON ───────────────────────────────── -->
+          <!--
+            Disabled by default.
+            Enabled by JS when all 6 digits are filled.
+            Auto-submits when 6th digit is entered (JS-driven).
+          -->
+          <button
+            class="pill-btn pill-btn--light pill-btn--full"
+            type="button"
+            id="verify-btn"
+            disabled
+            aria-disabled="true">
+            <span class="pill-btn__label">Verify Code</span>
+            <span class="pill-btn__spinner" aria-hidden="true" hidden></span>
+          </button>
+
+          <!-- ── TIMER + RESEND BLOCK ─────────────────────────── -->
+          <!--
+            Three sub-states managed by JS:
+            1. WAITING:  Timer counts down. Resend disabled.
+            2. EXPIRED:  Timer shows 00:00. Resend becomes active link.
+            3. RESENDING: Resend in loading state (brief).
+          -->
+          <div class="resend-block" aria-live="polite" aria-atomic="false">
+
+            <!-- Timer — visible during WAITING state -->
+            <p class="resend-block__timer" id="resend-timer" aria-label="Time remaining to resend code">
+              <span class="type-label type-label--muted type-label--sm">Resend code in</span>
+              <span class="resend-block__countdown" id="countdown" aria-hidden="true">00:60</span>
+              <span class="sr-only" id="countdown-sr" aria-live="off">60 seconds remaining</span>
+            </p>
+
+            <!-- Resend link — disabled visually until EXPIRED state -->
+            <p class="resend-block__action" id="resend-action" hidden>
+              <span class="type-label type-label--muted type-label--sm">Didn't receive it?</span>
+              <button
+                class="link-btn link-btn--action-blue link-btn--md"
+                type="button"
+                id="resend-btn"
+                aria-label="Resend verification code">
+                Resend code
+              </button>
+            </p>
+
+          </div>
+          <!-- /resend-block -->
+
+          <!-- C-05: Section Divider (rule-only) -->
+          <div class="section-divider section-divider--rule-only" role="separator" aria-hidden="true"></div>
+
+          <!-- ── CHANGE CONTACT METHOD ───────────────────────── -->
+          <!--
+            Secondary escape for users who entered the wrong
+            email or wish to use phone instead.
+            Routes back to SCR-01 with pre-filled session data.
+          -->
+          <div class="verification-panel__escape">
+            <p class="verification-panel__escape-text">
+              Wrong address?
+              <a
+                href="/register"
+                class="link-btn link-btn--near-black link-btn--md"
+                id="change-contact-link"
+                aria-label="Go back and change your email or phone number">
+                Change contact method
+              </a>
+            </p>
+          </div>
+
+        </div>
+        <!-- /verification-panel__body -->
+
+      </section>
+      <!-- /verification-panel -->
+
+    </div>
+    <!-- /verification-shell -->
+
+  </main>
+
+  <!-- ============================================================
+       C-07: TRUST BAR — full variant (identical pattern to SCR-01)
+  ============================================================ -->
+  <footer class="trust-bar trust-bar--full" aria-label="Platform trust indicators">
+    <div class="trust-bar__inner">
+      <div class="trust-bar__track">
+        <span class="trust-bar__item">
+          <span class="type-label type-label--muted type-label--sm">GDPR Compliant</span>
+        </span>
+        <span class="trust-bar__sep" aria-hidden="true">·</span>
+        <span class="trust-bar__item">
+          <span class="type-label type-label--muted type-label--sm">256-bit Encryption</span>
+        </span>
+        <span class="trust-bar__sep" aria-hidden="true">·</span>
+        <span class="trust-bar__item">
+          <span class="type-label type-label--muted type-label--sm">10,000+ Students Placed</span>
+        </span>
+        <span class="trust-bar__sep" aria-hidden="true">·</span>
+        <span class="trust-bar__item">
+          <span class="type-label type-label--muted type-label--sm">Counsellors in 12 Countries</span>
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Shared component behaviours (must load before screen script) -->
+  <script src="/shared/scripts/components.js"></script>
+  <script src="/archetypes/student-unpaid/ui/scripts/scr-02.js"></script>
+
+</body>
+</html>

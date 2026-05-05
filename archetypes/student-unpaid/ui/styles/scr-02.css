@@ -1,0 +1,460 @@
+/* =============================================================
+   scr-02.css — Screen-specific styles for SCR-02: OTP Verification
+   Depends on: tokens.css, components.css
+   Owns: page layout, verification panel, OTP cells,
+         timer block, step indicator, responsive rules.
+   Does NOT redefine any shared component from components.css.
+   ============================================================= */
+
+
+/* ─── PAGE LAYOUT ───────────────────────────────────────────── */
+/*
+   Single-column centred layout.
+   Full-height between navbar and trust bar.
+   Soft-stone canvas to differentiate from the form panel
+   white of SCR-01 — signals a new "neutral" phase of the flow.
+*/
+
+.page-verification {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - var(--navbar-height) - 64px); /* 64px = trust bar */
+    background: var(--color-soft-stone);
+    padding: var(--space-80) var(--margin-desktop);
+  }
+  
+  .verification-shell {
+    width: 100%;
+    max-width: 560px;
+  }
+  
+  
+  /* ─── VERIFICATION PANEL ────────────────────────────────────── */
+  /*
+     White canvas card floated on the soft-stone background.
+     sm card radius (8px) — product/UI card rule, not media card.
+     No shadow — ZGen Flat Elevation rule.
+     Border: 1px Hairline creates edge definition without elevation.
+  */
+  
+  .verification-panel {
+    background: var(--color-canvas);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  
+  /* Panel header: eyebrow + step indicator row */
+  .verification-panel__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-32) var(--space-40);
+  }
+  
+  /* Panel body: heading, descriptor, OTP, actions */
+  .verification-panel__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-32);
+    padding: var(--space-40);
+    padding-top: var(--space-32);
+  }
+  
+  /* Panel title (h1) */
+  .verification-panel__title {
+    font-family: var(--font-ui);
+    font-size: var(--text-section);         /* 48px — Section Heading */
+    line-height: var(--leading-section);    /* 1.2 */
+    letter-spacing: var(--tracking-section);
+    font-weight: 400;
+    color: var(--color-near-black);
+    margin: 0;
+  }
+  
+  /* Descriptor: "We sent a code to j•••e@gmail.com" */
+  .verification-panel__descriptor {
+    font-family: var(--font-ui);
+    font-size: var(--text-body-lg);         /* 18px */
+    line-height: var(--leading-body-lg);
+    color: var(--color-muted-slate);
+    margin: calc(var(--space-32) * -1 + var(--space-8)) 0 0; /* pull up to tighten gap after title */
+  }
+  
+  /* Masked destination address */
+  .verification-panel__destination {
+    font-weight: 400;
+    color: var(--color-near-black);
+    font-family: var(--font-mono);          /* mono for addresses — functional precision */
+    font-size: 15px;
+    letter-spacing: var(--tracking-mono);
+  }
+  
+  /* Escape row: "Wrong address? Change contact method" */
+  .verification-panel__escape {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .verification-panel__escape-text {
+    font-size: var(--text-body);
+    color: var(--color-muted-slate);
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+  }
+  
+  
+  /* ─── STEP INDICATOR ────────────────────────────────────────── */
+  /*
+     Horizontal pip track. 4 steps reflecting the 4-step onboarding.
+     Completed steps: Near-Black fill.
+     Active step: Coral fill.
+     Upcoming steps: Hairline border only.
+     Matches ZGen flow structure — progress without heavy chrome.
+  */
+  
+  .step-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--space-6);
+  }
+  
+  .step-indicator__track {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+  }
+  
+  .step-indicator__step {
+    display: block;
+    width: 24px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--color-hairline);
+    border: 1px solid var(--color-hairline);
+    transition: background var(--transition-fast);
+  }
+  
+  .step-indicator__step--done {
+    background: var(--color-near-black);
+    border-color: var(--color-near-black);
+  }
+  
+  .step-indicator__step--active {
+    background: var(--color-coral);
+    border-color: var(--color-coral);
+  }
+  
+  .step-indicator__label {
+    /* TypeLabel via utility classes on the element */
+  }
+  
+  
+  /* ─── OTP INPUT GROUP ───────────────────────────────────────── */
+  /*
+     6 individual digit cells + a visual mid-separator.
+     Each cell is a square input — equal width/height.
+     States: default, focused, filled, error, success, disabled.
+     Auto-advance and paste logic handled in scr-02.js.
+  */
+  
+  .otp-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+  }
+  
+  .otp-group__inputs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-12);
+  }
+  
+  /* Individual OTP digit cell */
+  .otp-cell {
+    width: 56px;
+    height: 64px;
+    font-family: var(--font-mono);
+    font-size: 28px;
+    line-height: 1;
+    font-weight: 400;
+    text-align: center;
+    color: var(--color-near-black);
+    background: var(--color-canvas);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-sm);
+    padding: 0;
+    outline: none;
+    cursor: text;
+    caret-color: var(--color-coral);         /* visible caret in coral — subtle brand signal */
+    transition:
+      border-color var(--transition-fast),
+      background var(--transition-fast);
+  
+    /* Prevent browser autocomplete dropdown overlay */
+    -webkit-text-security: none;
+  }
+  
+  .otp-cell::selection {
+    background: rgba(255, 119, 89, 0.15);  /* coral tint selection */
+  }
+  
+  /* Focused state */
+  .otp-cell:focus {
+    border-color: var(--color-near-black);
+    background: var(--color-soft-stone);
+  }
+  
+  /* Filled state — digit entered (applied via JS .otp-cell--filled) */
+  .otp-cell--filled {
+    border-color: var(--color-near-black);
+    background: var(--color-canvas);
+  }
+  
+  /* Error state (applied via JS .otp-cell--error on all cells) */
+  .otp-cell--error {
+    border-color: var(--color-error);
+    background: rgba(179, 0, 0, 0.04);
+    animation: otp-shake 300ms ease-out;
+  }
+  
+  /* Success state (applied via JS .otp-cell--success on all cells) */
+  .otp-cell--success {
+    border-color: var(--color-success);
+    background: rgba(26, 122, 74, 0.05);
+  }
+  
+  /* Disabled state — while verifying or after expiry */
+  .otp-cell:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  /* Shake animation for invalid entry */
+  @keyframes otp-shake {
+    0%   { transform: translateX(0); }
+    20%  { transform: translateX(-4px); }
+    40%  { transform: translateX(4px); }
+    60%  { transform: translateX(-3px); }
+    80%  { transform: translateX(3px); }
+    100% { transform: translateX(0); }
+  }
+  
+  /* Mid-group separator ( — ) */
+  .otp-group__sep {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    color: var(--color-hairline);
+    user-select: none;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+  
+  /* Status message below OTP cells */
+  .otp-group__status {
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.4;
+    min-height: 20px;           /* reserves space so layout doesn't jump */
+    text-align: center;
+  }
+  
+  /* Status color variants — applied via JS data-state attribute */
+  .otp-group__status[data-state="error"] {
+    color: var(--color-error);
+  }
+  
+  .otp-group__status[data-state="expired"] {
+    color: var(--color-coral);
+  }
+  
+  .otp-group__status[data-state="success"] {
+    color: var(--color-success);
+  }
+  
+  .otp-group__status[data-state="waiting"] {
+    color: var(--color-muted-slate);
+  }
+  
+  
+  /* ─── RESEND BLOCK ──────────────────────────────────────────── */
+  /*
+     Houses the countdown timer (WAITING state) and
+     the resend action link (EXPIRED state).
+     Only one is visible at a time — toggled via JS.
+  */
+  
+  .resend-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-8);
+    min-height: 28px;          /* prevents layout shift during state swap */
+  }
+  
+  /* Timer line */
+  .resend-block__timer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+  }
+  
+  /* Countdown number */
+  .resend-block__countdown {
+    font-family: var(--font-mono);
+    font-size: var(--text-mono);
+    letter-spacing: var(--tracking-mono);
+    color: var(--color-near-black);
+    /* Tabular numbers for stable-width countdown */
+    font-variant-numeric: tabular-nums;
+  }
+  
+  /* Expired state: countdown turns coral to signal action needed */
+  .resend-block__countdown--expired {
+    color: var(--color-coral);
+  }
+  
+  /* Resend action row */
+  .resend-block__action {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+  }
+  
+  /* Screen-reader-only utility class */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  
+  
+  /* ─── RESPONSIVE: TABLET (768px – 1024px) ───────────────────── */
+  
+  @media (max-width: 1024px) {
+  
+    .page-verification {
+      padding: var(--space-64) var(--margin-tablet);
+    }
+  
+    .verification-panel__header {
+      padding: var(--space-24) var(--space-32);
+    }
+  
+    .verification-panel__body {
+      padding: var(--space-32);
+      gap: var(--space-24);
+    }
+  
+    .verification-panel__title {
+      font-size: clamp(32px, 4vw, 44px);
+    }
+  
+    .otp-cell {
+      width: 52px;
+      height: 60px;
+      font-size: 26px;
+    }
+  
+    .navbar__inner {
+      padding: 0 var(--margin-tablet);
+    }
+  
+    .trust-bar__inner {
+      padding: 20px var(--margin-tablet);
+    }
+  }
+  
+  
+  /* ─── RESPONSIVE: MOBILE (<768px) ───────────────────────────── */
+  /*
+     "Utility & Flow" mode.
+     Panel goes edge-to-edge. OTP cells scale to touch targets.
+     Typography scales down per ZGen Responsive Rule 5.
+  */
+  
+  @media (max-width: 767px) {
+  
+    .page-verification {
+      align-items: flex-start;
+      padding: var(--space-32) 0;
+      background: var(--color-canvas);    /* Mobile: no stone background — panel fills viewport */
+    }
+  
+    .verification-shell {
+      max-width: 100%;
+    }
+  
+    .verification-panel {
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
+      border-top: none;
+      border-bottom: 1px solid var(--color-hairline);
+    }
+  
+    .verification-panel__header {
+      padding: var(--space-24) var(--margin-mobile);
+    }
+  
+    .verification-panel__body {
+      padding: var(--space-24) var(--margin-mobile);
+      gap: var(--space-24);
+    }
+  
+    .verification-panel__title {
+      font-size: 32px;
+      line-height: 1.15;
+    }
+  
+    .verification-panel__descriptor {
+      font-size: var(--text-body);
+      margin-top: 0;
+    }
+  
+    /* OTP cells scale up slightly for touch — maintain 44px+ height */
+    .otp-cell {
+      flex: 1;
+      width: auto;
+      min-width: 40px;
+      height: 56px;
+      font-size: 22px;
+    }
+  
+    .otp-group__inputs {
+      gap: var(--space-8);
+      width: 100%;
+    }
+  
+    /* Verify button already full-width via pill-btn--full */
+    .pill-btn {
+      padding: var(--btn-padding-lg);       /* 16px 32px mobile touch target */
+    }
+  
+    .navbar__inner {
+      padding: 0 var(--margin-mobile);
+    }
+  
+    .navbar__prompt {
+      display: none;
+    }
+  
+    .trust-bar__inner {
+      padding: 20px var(--margin-mobile);
+    }
+  
+    .step-indicator__step {
+      width: 18px;
+    }
+  }
