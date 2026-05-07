@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome | Study Abroad Journey</title>
+    <!-- Global stylesheets -->
+    <link rel="stylesheet" href="/shared/styles/tokens.css" />
+    <link rel="stylesheet" href="/shared/styles/components.css" />
+    <link rel="stylesheet" href="/archetypes/student-unpaid/ui/styles/scr-04.css" /> 
+</head>
+<body>
+    <main class="welcome-page">
+        <article class="welcome-container">
+            
+            <!-- System Status / Loading Feedback -->
+            <section id="loading-state" class="welcome-loading active" aria-live="polite">
+                <p class="loading-text type-label" id="loading-msg">Analyzing your academic profile...</p>
+                <div class="loading-track" aria-hidden="true">
+                    <div class="loading-progress"></div>
+                </div>
+            </section>
+
+            <!-- Ready State (Hidden initially) -->
+            <section id="ready-state" class="welcome-content hidden" aria-live="polite">
+                
+                <!-- 1. Hero Section -->
+                <header class="welcome-hero">
+                    <h1 class="display-title">Your study abroad plan starts now.</h1>
+                    <p class="body-text">Based on your profile, we’ve curated universities and programs that perfectly match your goals.</p>
+                </header>
+
+                <!-- 2. Profile Summary Strip -->
+                <div class="welcome-summary">
+                    <ul class="summary-list">
+                        <li>
+                            <span class="type-label">Destinations</span>
+                            <span class="summary-val" id="sum-dest">USA, UK</span>
+                        </li>
+                        <li>
+                            <span class="type-label">Degree</span>
+                            <span class="summary-val" id="sum-degree">Master's</span>
+                        </li>
+                        <li>
+                            <span class="type-label">Intake</span>
+                            <span class="summary-val" id="sum-intake">Fall 2025</span>
+                        </li>
+                        <li>
+                            <span class="type-label">Budget</span>
+                            <span class="summary-val" id="sum-budget">$20k - $40k</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 4 & 5. Actions -->
+                <div class="welcome-actions">
+                    <button type="button" class="pill-btn pill-btn--full" id="btn-dashboard">View My Dashboard</button>
+                    <button type="button" class="link-btn" id="btn-edit">Edit my profile</button>
+                </div>
+
+                <!-- 6. Trust / Reassurance -->
+                <footer class="welcome-trust">
+                    <p class="type-label">Matches generated across 500+ verified global institutions.</p>
+                </footer>
+
+            </section>
+        </article>
+    </main>
+
+    <script src="/shared/scripts/components.js"></script>
+    <script src="/archetypes/student-unpaid/ui/scripts/scr-04.js"></script>
+</body>
+</html>

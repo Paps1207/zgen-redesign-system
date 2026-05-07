@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard | Study Abroad</title>
+    <link rel="stylesheet" href="/shared/styles/tokens.css" />
+    <link rel="stylesheet" href="/shared/styles/components.css" />
+    <link rel="stylesheet" href="/archetypes/student-unpaid/ui/styles/scr-05.css" /> 
+</head>
+<body>
+
+<div class="dashboard-wrapper">
+    <div class="dashboard-container">
+        
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="user-greeting-box">
+                    <div class="avatar">A</div>
+                    <div class="greeting-text">
+                        <h2>Good Evening, Arpita 👋</h2>
+                        <p>Your journey is progressing well.</p>
+                    </div>
+                </div>
+
+                <div class="profile-completion-card">
+                    <div class="completion-header">
+                        <div class="progress-ring-container">
+                            <svg class="progress-ring" width="56" height="56">
+                                <circle class="progress-ring-bg" stroke-width="4" fill="transparent" r="24" cx="28" cy="28"/>
+                                <circle class="progress-ring-fill" stroke-width="4" fill="transparent" r="24" cx="28" cy="28"/>
+                            </svg>
+                            <span class="progress-text">80%</span>
+                        </div>
+                        <div class="completion-titles">
+                            <h3>Profile Strength</h3>
+                            <p>Almost complete!</p>
+                        </div>
+                    </div>
+                    <ul class="checklist">
+                        <li class="done">✔ Account Created</li>
+                        <li class="done">✔ Email Verified</li>
+                        <li class="done">✔ Profile Setup</li>
+                        <li class="pending">○ SOP Pending</li>
+                        <li class="pending">○ Documents Pending</li>
+                    </ul>
+                    <button class="btn-outline-full">Complete Profile</button>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active">Dashboard</a>
+                <a href="#" class="nav-item">Universities</a>
+                <a href="#" class="nav-item">Applications</a>
+                <a href="#" class="nav-item">Documents</a>
+                <a href="#" class="nav-item">Scholarships</a>
+                <a href="#" class="nav-item">Messages <span class="badge">2</span></a>
+                <a href="#" class="nav-item">Settings</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="btn-text-muted">Log Out</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <header class="top-header">
+                <h1 class="page-title">Your Dashboard</h1>
+                <div class="header-actions">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search universities...">
+                    </div>
+                    <button class="icon-btn">🔔<span class="notification-dot"></span></button>
+                    <div class="mini-avatar">A</div>
+                </div>
+            </header>
+
+            <div class="content-scroll-area">
+                
+                <section class="dashboard-section">
+                    <div class="hero-card">
+                        <div class="hero-text">
+                            <h2>Your Journey Progress</h2>
+                            <p>You’re 68% done with your study abroad preparation.</p>
+                        </div>
+                        
+                        <div class="journey-tracker">
+                            <div class="track-step completed">
+                                <div class="step-dot">✔</div>
+                                <span>Account Setup</span>
+                            </div>
+                            <div class="track-line completed"></div>
+                            <div class="track-step completed">
+                                <div class="step-dot">✔</div>
+                                <span>Verification</span>
+                            </div>
+                            <div class="track-line completed"></div>
+                            <div class="track-step completed">
+                                <div class="step-dot">✔</div>
+                                <span>Academic Details</span>
+                            </div>
+                            <div class="track-line active"></div>
+                            <div class="track-step active">
+                                <div class="step-dot"></div>
+                                <span>University Shortlisting</span>
+                            </div>
+                            <div class="track-line"></div>
+                            <div class="track-step">
+                                <div class="step-dot"></div>
+                                <span>Applications</span>
+                            </div>
+                            <div class="track-line"></div>
+                            <div class="track-step">
+                                <div class="step-dot"></div>
+                                <span>Visa Process</span>
+                            </div>
+                        </div>
+
+                        <div class="hero-actions">
+                            <button class="btn-secondary">View Checklist</button>
+                            <button class="btn-primary">Continue Journey</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="dashboard-section">
+                    <div class="section-header">
+                        <h2>Top University Matches</h2>
+                        <a href="#" class="link-text">View All</a>
+                    </div>
+                    <div class="card-grid" id="university-grid">
+                        </div>
+                </section>
+
+                <section class="dashboard-section">
+                    <div class="section-header">
+                        <h2>Application Tracker</h2>
+                    </div>
+                    <div class="tracker-list" id="application-list">
+                        </div>
+                </section>
+
+                <section class="dashboard-section">
+                    <div class="section-header">
+                        <h2>Document Center</h2>
+                        <a href="#" class="link-text">Manage Documents</a>
+                    </div>
+                    <div class="doc-grid" id="document-grid">
+                        </div>
+                </section>
+
+                <div class="split-grid">
+                    <section class="dashboard-section profile-insights">
+                        <div class="section-header">
+                            <h2>Profile Insights ✨</h2>
+                        </div>
+                        <div class="insight-list">
+                            <div class="insight-card">
+                                <h4>GPA Strength</h4>
+                                <p>Your GPA is competitive for 78% of your shortlisted universities.</p>
+                            </div>
+                            <div class="insight-card">
+                                <h4>Budget Alignment</h4>
+                                <p>You match well with public institutions in Germany and Canada.</p>
+                            </div>
+                            <div class="insight-card">
+                                <h4>Scholarship Eligibility</h4>
+                                <p>High probability for merit-based awards at target schools.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="dashboard-section upcoming-deadlines">
+                        <div class="section-header">
+                            <h2>Upcoming Deadlines</h2>
+                        </div>
+                        <div class="deadline-list" id="deadline-list">
+                            </div>
+                    </section>
+                </div>
+
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="/shared/scripts/components.js"></script>
+<script src="/archetypes/student-unpaid/ui/scripts/scr-05.js"></script>
+</body>
+</html>

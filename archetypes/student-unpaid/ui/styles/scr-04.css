@@ -1,0 +1,214 @@
+/* 
+  SCR-04: Welcome / Transition Screen
+  Strict ZGen Design System Compliance: Minimal, Flat, Editorial, Monochrome
+*/
+
+.welcome-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--canvas, #ffffff);
+    color: var(--near-black, #111111);
+    padding: 24px;
+}
+
+.welcome-container {
+    width: 100%;
+    max-width: 720px; /* Editorial max-width */
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* =========================================
+   LOADING STATE
+   ========================================= */
+.welcome-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease;
+}
+
+.welcome-loading.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.loading-text {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 24px;
+    color: var(--near-black, #111111);
+}
+
+.loading-track {
+    width: 240px;
+    height: 2px;
+    background-color: var(--hairline, #e5e5e5);
+    overflow: hidden;
+    position: relative;
+}
+
+.loading-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background-color: var(--near-black, #111111);
+    transition: width 0.3s ease;
+}
+
+/* =========================================
+   READY STATE (CONTENT)
+   ========================================= */
+.welcome-content {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    display: none;
+}
+
+.welcome-content.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hero Section */
+.welcome-hero {
+    margin-bottom: 64px;
+}
+
+.display-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    color: var(--near-black, #111111);
+}
+
+@media (min-width: 768px) {
+    .display-title {
+        font-size: 4rem; /* Massive, editorial display size */
+    }
+}
+
+.body-text {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: var(--muted-slate, #666666);
+    max-width: 540px;
+    margin: 0 auto;
+}
+
+/* Summary Strip */
+.welcome-summary {
+    margin-bottom: 64px;
+    border-top: 1px solid var(--hairline, #e5e5e5);
+    border-bottom: 1px solid var(--hairline, #e5e5e5);
+    padding: 32px 0;
+}
+
+.summary-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+@media (min-width: 768px) {
+    .summary-list {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 16px;
+    }
+}
+
+.summary-list li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.type-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted-slate, #666666);
+}
+
+.summary-val {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--near-black, #111111);
+}
+
+/* Actions */
+.welcome-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    max-width: 400px;
+    margin: 0 auto 64px auto;
+}
+
+.pill-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 32px;
+    border-radius: 9999px;
+    font-size: 1.125rem;
+    font-weight: 500;
+    border: 1px solid var(--near-black, #111111);
+    background-color: var(--near-black, #111111);
+    color: var(--canvas, #ffffff);
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.pill-btn--full {
+    width: 100%;
+}
+
+.pill-btn:hover {
+    opacity: 0.8;
+}
+
+.link-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.125rem;
+    color: var(--muted-slate, #666666);
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: color 0.2s ease;
+}
+
+.link-btn:hover {
+    color: var(--near-black, #111111);
+}
+
+/* Trust Bar */
+.welcome-trust {
+    padding-top: 24px;
+}
+
+.hidden {
+    display: none !important;
+}

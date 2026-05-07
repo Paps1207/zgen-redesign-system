@@ -89,19 +89,26 @@
         Example: sessionStorage.getItem('zgen_verify_destination')
      */
    
-     function _getDestination() {
-       /* Production:
-          return sessionStorage.getItem('zgen_verify_destination') || 'your email'; */
-   
-       /* Development stub */
-       return 'j••••s@gmail.com';
-     }
+     
+        function _getDestination() {
+          return sessionStorage.getItem('zgen_verify_destination') || 'your email';
+        }
    
      function _renderDestination() {
        if (destinationEl) {
          destinationEl.textContent = destination;
        }
      }
+     _showDevOTP();
+
+     function _showDevOTP() {
+      const el = document.getElementById('dev-otp-hint');
+      const otp = sessionStorage.getItem('zgen_otp');
+    
+      if (!el || !otp) return;
+    
+      el.textContent = `Dev OTP: ${otp}`;
+    }
    
    
      /* ── 6. COUNTDOWN TIMER ──────────────────────────────────── */
@@ -547,51 +554,36 @@
      }
    
      async function _callVerifyAPI(code) {
-       /*
-          Production:
-          const response = await fetch('/api/auth/verify-otp', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ code }),
-          });
-          if (!response.ok) {
-            const err = await response.json();
-            throw err;
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+    
+          const correctCode = sessionStorage.getItem('zgen_otp');
+    
+          if (code === correctCode) {
+            resolve({ status: 'VERIFIED', next: '/onboarding' });
+          } else {
+            reject({ code: 'INVALID_CODE', message: 'That code doesn’t match.' });
           }
-          return response.json();
-       */
+    
+        }, 800);
+      });
+    }
    
-       /* Development stub — 1s API simulation */
-       return new Promise((resolve, reject) => {
-         setTimeout(() => {
-           /* Simulate correct code = '123456' for development */
-           const correctCode = '123456';
-           if (code === correctCode) {
-             resolve({ status: 'VERIFIED', next: '/onboarding' });
-           } else {
-             reject({ code: 'INVALID_CODE', message: 'That code doesn\'t match. Please try again.' });
-           }
-         }, 1000);
-       });
-     }
-   
-     async function _requestResend() {
-       /*
-          Production:
-          const response = await fetch('/api/auth/resend-otp', {
-            method: 'POST',
-          });
-          if (!response.ok) {
-            throw await response.json();
-          }
-          return response.json();
-       */
-   
-       /* Development stub — 800ms simulation */
-       return new Promise((resolve) => {
-         setTimeout(() => resolve({ status: 'SENT' }), 800);
-       });
-     }
+    async function _requestResend() {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+    
+          /* Generate NEW OTP */
+          const newOTP = Math.floor(100000 + Math.random() * 900000).toString();
+          sessionStorage.setItem('zgen_otp', newOTP);
+    
+          console.log('NEW DEV OTP:', newOTP); // 👈 see updated OTP
+    
+          resolve({ status: 'SENT' });
+    
+        }, 800);
+      });
+    }
    
    
      /* ── 16. ERROR HANDLING ──────────────────────────────────── */
@@ -629,10 +621,11 @@
         In production: use router navigation.
      */
    
-     function _transitionToOnboarding() {
-       console.info('[SCR-02] Account verified. Transitioning to SCR-03.');
-       /* Production: window.location.href = '/onboarding'; */
-     }
+        function _transitionToOnboarding() {
+          console.info('[SCR-02] Account verified. Transitioning to SCR-03.');
+        
+          window.location.href = 'scr-03-onboarding.html'; // 👈 match your file name
+        }
    
    
      /* ── BOOT ────────────────────────────────────────────────── */
